@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Protocol Not Found</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* BASE RESET & LIQUID GLASS INTEGRATION */
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        body { 
+            background: #0f172a; color: #fff; font-family: 'Inter', sans-serif; 
+            min-height: 100vh; overflow: hidden; display: flex; 
+            align-items: center; justify-content: center; position: relative;
+        }
+
+        /* AMBIENT BACKGROUND */
+        .bg-element {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.5; z-index: -1;
+            animation: float 12s infinite ease-in-out alternate; pointer-events: none;
+        }
+        .bg-1 { width: 50vw; height: 50vw; max-width: 500px; max-height: 500px; background: #8b5cf6; top: -10%; left: -10%; }
+        .bg-2 { width: 40vw; height: 40vw; max-width: 400px; max-height: 400px; background: #ec4899; bottom: -10%; right: -5%; animation-delay: -6s; }
+        
+        @keyframes float { 
+            0% { transform: translate(0, 0) scale(1); } 
+            100% { transform: translate(50px, 80px) scale(1.15); } 
+        }
+
+        /* GLASSMORPHIC RECOVERY CARD */
+        .error-card {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px;
+            padding: 50px 40px; text-align: center; max-width: 450px; width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 10;
+        }
+
+        h1 { 
+            font-family: 'Space Grotesk', sans-serif; font-size: 6rem; line-height: 1;
+            background: linear-gradient(to right, #a78bfa, #f472b6); 
+            -webkit-background-clip: text; color: transparent; margin-bottom: 10px;
+        }
+        
+        h2 { font-size: 1.5rem; font-weight: 500; margin-bottom: 15px; color: #e2e8f0; }
+        p { color: #94a3b8; font-weight: 300; margin-bottom: 30px; line-height: 1.5; }
+
+        /* RECOVERY BUTTON */
+        .btn-recovery {
+            display: inline-block; width: 100%; padding: 15px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; text-decoration: none; border-radius: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-recovery:hover {
+            background: rgba(255, 255, 255, 0.1); border-color: #a78bfa;
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2); transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-element bg-1"></div>
+    <div class="bg-element bg-2"></div>
+
+    <div class="error-card">
+        <h1>404</h1>
+        <h2>Protocol Not Found</h2>
+        <p>The requested directory or tool does not exist on this server.</p>
+        
+        <a href="/" class="btn-recovery">Return to Hub</a>
+    </div>
+
+</body>
+</html>
