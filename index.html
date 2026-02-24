@@ -6,36 +6,83 @@
     <title>JOATMON | Viral Tools & Fun</title>
     
     <style>
-        :root {
-            --bg-color: #f4f4f9;
-            --primary-color: #2c3e50;
-            --accent-color: #e74c3c;
-            --text-color: #333;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; min-height: 100vh; }
-        
-        header { background: var(--primary-color); color: white; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { font-size: 2rem; letter-spacing: 1px; }
-        p.subtitle { font-size: 0.9rem; opacity: 0.8; margin-top: 5px; }
-        
-        main { flex: 1; padding: 30px 20px; max-width: 800px; margin: 0 auto; width: 100%; }
-        
-        .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
-        .tool-card { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s; cursor: pointer; border: 1px solid #eee; }
-        .tool-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
-        .tool-card h3 { color: var(--primary-color); margin-bottom: 10px; }
-        .tool-card p { font-size: 0.9rem; color: #666; margin-bottom: 15px; }
-        .btn { display: inline-block; background: var(--accent-color); color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; width: 100%; }
-        
-        /* ADSTERRA BANNER SLOT ZONE */
-        .ad-slot-banner { width: 100%; min-height: 50px; background: #e0e0e0; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.8rem; border: 1px dashed #ccc;}
-        
-        footer { background: #222; color: #aaa; text-align: center; padding: 20px; font-size: 0.8rem; }
-        footer a { color: #aaa; text-decoration: none; margin: 0 10px; }
-        footer a:hover { color: white; }
-        .legal-warning { margin-top: 10px; font-size: 0.7rem; opacity: 0.6; }
-    </style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap');
+
+    :root {
+        --bg-color: #121212;         /* Deep Charcoal */
+        --card-bg: #242220;          /* Vintage Dark */
+        --gold-accent: #D4AF37;      /* Parchment Gold */
+        --red-action: #A22323;       /* Crimson Red */
+        --text-main: #F3E5AB;        /* Light Parchment */
+        --text-muted: #A09E9A;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+        background-color: var(--bg-color); 
+        color: var(--text-main); 
+        font-family: 'Inter', sans-serif; 
+        display: flex; flex-direction: column; min-height: 100vh; 
+    }
+    
+    header { 
+        text-align: center; 
+        padding: 30px 20px 20px; 
+        border-bottom: 2px solid var(--red-action);
+        background: linear-gradient(180deg, rgba(162,35,35,0.1) 0%, rgba(18,18,18,0) 100%);
+    }
+    
+    /* Vintage Header Font */
+    h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold-accent); letter-spacing: 2px; text-transform: uppercase; }
+    p.subtitle { font-size: 0.9rem; color: var(--text-muted); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px;}
+    
+    main { flex: 1; padding: 30px 20px; max-width: 800px; margin: 0 auto; width: 100%; }
+    
+    .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+    
+    /* Premium Card UI */
+    .tool-card { 
+        background: var(--card-bg); 
+        padding: 25px 20px; 
+        border-radius: 8px; 
+        text-align: center; 
+        border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle Gold Border */
+        transition: transform 0.2s, border-color 0.2s; 
+    }
+    .tool-card:hover { transform: translateY(-3px); border-color: var(--gold-accent); }
+    
+    .tool-card h3 { font-family: 'Playfair Display', serif; color: var(--gold-accent); margin-bottom: 10px; font-size: 1.4rem; }
+    .tool-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.4; }
+    
+    /* Action Buttons */
+    .btn { 
+        display: inline-block; 
+        background: var(--red-action); 
+        color: #fff; 
+        text-decoration: none; 
+        padding: 12px 20px; 
+        border-radius: 4px; 
+        font-weight: 600; 
+        width: 100%; 
+        border: 1px solid #7a1919;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .btn:hover { background: #b82b2b; }
+    
+    /* ADSTERRA BANNER SLOT ZONE */
+    .ad-slot-banner { 
+        width: 100%; min-height: 50px; background: #000; margin: 20px 0; 
+        display: flex; align-items: center; justify-content: center; 
+        color: #444; font-size: 0.8rem; border: 1px dashed #333;
+    }
+    
+    footer { text-align: center; padding: 20px; font-size: 0.8rem; border-top: 1px solid #333; margin-top: auto;}
+    footer a { color: var(--gold-accent); text-decoration: none; margin: 0 10px; }
+    footer a:hover { text-decoration: underline; }
+    .legal-warning { margin-top: 10px; font-size: 0.7rem; color: #555; }
+</style>
 </head>
 <body>
 
