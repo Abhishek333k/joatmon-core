@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Vibe Check | JOATMON</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+.smartlink-container {
+        padding: 20px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .btn-smart {
+        display: inline-block;
+        width: 100%;
+        max-width: 300px;
+        padding: 18px 30px;
+        background: linear-gradient(45deg, #a78bfa, #f472b6); /* Theme X Gradients */
+        color: white;
+        text-decoration: none;
+        border-radius: 16px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        transition: all 0.3s ease;
+        animation: pulse-glow 2s infinite;
+    }
+
+    .btn-smart:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(236, 72, 153, 0.4);
+    }
+
+    .btn-smart:active {
+        transform: scale(0.95);
+    }
+
+    @keyframes pulse-glow {
+        0% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.4); }
+        70% { box-shadow: 0 0 0 15px rgba(167, 139, 250, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0); }
+    }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        body { 
+            background: #0f172a; color: #fff; font-family: 'Inter', sans-serif; 
+            min-height: 100vh; overflow-x: hidden; position: relative;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+
+        /* AMBIENT BACKGROUND */
+        .bg-element {
+            position: fixed; border-radius: 50%; filter: blur(100px); opacity: 0.5; z-index: -1;
+            animation: float 12s infinite ease-in-out alternate; pointer-events: none;
+        }
+        .bg-1 { width: 50vw; height: 50vw; max-width: 500px; max-height: 500px; background: #8b5cf6; top: -10%; left: -10%; }
+        .bg-2 { width: 40vw; height: 40vw; max-width: 400px; max-height: 400px; background: #ec4899; bottom: -10%; right: -5%; animation-delay: -6s; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 80px) scale(1.15); } }
+
+        .app-container { width: 100%; max-width: 450px; position: relative; }
+
+        /* AD ZONE */
+        .ad-zone {
+            width: 100%; min-height: 60px; margin: 15px 0;
+            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px);
+            border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: #64748b; font-size: 0.8rem; font-weight: 500; text-transform: uppercase;
+        }
+
+        /* LIQUID GLASS CARD */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px;
+            padding: 30px 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;
+        }
+
+        .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; background: linear-gradient(to right, #a78bfa, #f472b6); -webkit-background-clip: text; color: transparent; margin-bottom: 5px; }
+        .header p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 25px; }
+
+        .progress-track { background: rgba(255,255,255,0.1); height: 8px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #a78bfa, #f472b6); transition: width 0.6s ease; }
+
+        #question-text { font-size: 1.2rem; font-weight: 500; margin-bottom: 25px; line-height: 1.4; color: #e2e8f0; }
+
+        /* BUTTONS */
+        .btn-option {
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px; border-radius: 16px; margin-bottom: 12px; color: #fff; cursor: pointer;
+            font-size: 1rem; font-weight: 500; font-family: 'Inter', sans-serif;
+        }
+        .btn-option:hover { background: rgba(255,255,255,0.1); border-color: #a78bfa; transform: scale(0.98); }
+
+        .btn-action {
+            width: 100%; background: linear-gradient(45deg, #a78bfa, #f472b6);
+            color: white; border: none; padding: 18px; border-radius: 16px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 15px;
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        }
+        .btn-action:hover { transform: scale(0.96); box-shadow: 0 5px 10px rgba(139, 92, 246, 0.2); }
+
+        #result-screen, .spinner { display: none; }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(139, 92, 246, 0.2); border-left-color: #a78bfa; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+<div class="bg-element bg-1"></div>
+<div class="bg-element bg-2"></div>
+
+<div class="app-container">
+    
+    <div class="ad-zone">
+        <script async="async" data-cfasync="false" src="https://pl28785194.effectivegatecpm.com/bd3d9035186c17d583b639becb6229e5/invoke.js"></script>
+        <div id="container-bd3d9035186c17d583b639becb6229e5"></div>
+    </div>
+
+    <div class="glass-card" id="main-card">
+        <div class="header">
+            <h1>The Vibe Check</h1>
+            <p>Discover your true aura.</p>
+        </div>
+
+        <div id="quiz-screen">
+            <div class="progress-track"><div class="progress-fill" id="prog-val"></div></div>
+            <div id="question-text">Loading the vibe...</div>
+            <div id="options-box"></div>
+        </div>
+
+        <div id="result-screen">
+            <div class="spinner" id="loading-spinner"></div>
+            <div id="result-content" style="display:none;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 10px; color: #fff;">Your Aura is <span id="aura-name" style="color: #a78bfa;">...</span></h2>
+                <p id="aura-desc" style="margin-bottom: 30px; font-size: 0.95rem; color: #94a3b8; line-height: 1.5;"></p>
+                <button class="btn-action" onclick="shareResult()">Share on WhatsApp</button>
+                <button class="btn-option" style="margin-top: 10px;" onclick="location.reload()">Retake Diagnostic</button>
+            </div>
+        </div>
+    </div>
+<div class="smartlink-container">
+    <a href="https://www.effectivegatecpm.com/hnj65y61c?key=ebb4b287e3d00e14e2e3a9b5493fbb8b" 
+       target="_blank" 
+       class="btn-smart">
+       Access Diagnostic
+    </a>
+</div>
+
+    <div class="ad-zone">
+        <script async="async" data-cfasync="false" src="https://pl28785194.effectivegatecpm.com/bd3d9035186c17d583b639becb6229e5/invoke.js"></script>
+        <div id="container-bd3d9035186c17d583b639becb6229e5"></div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { q: "I see myself as: Extraverted, enthusiastic.", options: ["Disagree strongly", "Disagree", "Agree", "Agree strongly"] },
+        { q: "I see myself as: Dependable, self-disciplined.", options: ["Disagree strongly", "Disagree", "Agree", "Agree strongly"] },
+        { q: "I see myself as: Open to new experiences, complex.", options: ["Disagree strongly", "Disagree", "Agree", "Agree strongly"] },
+        { q: "I see myself as: Calm, emotionally stable.", options: ["Disagree strongly", "Disagree", "Agree", "Agree strongly"] }
+    ];
+    const auras = [
+        { name: "Golden ✨", desc: "High positive traits (Big Five validated): outgoing, stable sunshine everyone loves." },
+        { name: "Midnight 🌙", desc: "Lower-moderate traits: introspective, complex, deep iced-coffee energy." },
+        { name: "Electric ⚡", desc: "High openness/dependability: creative, reliable, high-vibe spark." }
+    ];
+
+    let currentIdx = 0; let score = 0;
+
+    function renderQuestion() {
+        if(currentIdx >= questions.length) { showResults(); return; }
+        
+        document.getElementById('question-text').innerText = questions[currentIdx].q;
+        setTimeout(() => { document.getElementById('prog-val').style.width = ((currentIdx) / questions.length * 100) + "%"; }, 50);
+
+        const box = document.getElementById('options-box');
+        box.innerHTML = '';
+        
+        questions[currentIdx].options.forEach((label, val) => {
+            const b = document.createElement('button');
+            b.className = 'btn-option';
+            b.innerText = label;
+            b.onclick = () => { score += val; currentIdx++; renderQuestion(); };
+            box.appendChild(b);
+        });
+    }
+
+    function showResults() {
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('loading-spinner').style.display = 'block';
+        
+        setTimeout(() => {
+            document.getElementById('loading-spinner').style.display = 'none';
+            document.getElementById('result-content').style.display = 'block';
+            
+            const finalAura = auras[score % auras.length];
+            document.getElementById('aura-name').innerText = finalAura.name;
+            document.getElementById('aura-desc').innerText = finalAura.desc;
+            document.getElementById('prog-val').style.width = "100%";
+        }, 1500);
+    }
+
+    function shareResult() {
+        const text = `I just took the Vibe Check and my aura is ${document.getElementById('aura-name').innerText}! Find out yours here: `;
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + window.location.href)}`);
+    }
+
+    renderQuestion();
+</script>
+
+<script src="https://pl28785129.effectivegatecpm.com/f2/e2/de/f2e2de0100fd2988cfc2a7ff3b1b2e64.js"></script>
+
+</body>
+</html>
