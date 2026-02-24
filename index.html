@@ -3,89 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JOATMON | Viral Tools & Fun</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>JOATMON Hub | Viral Tools & Utilities</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg-color: #f3f4f6;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --primary: #8b5cf6; 
-            --secondary: #ec4899; 
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
+        /* BASE RESET & TYPOGRAPHY */
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        body { 
+            background: #0f172a; color: #fff; font-family: 'Inter', sans-serif; 
+            min-height: 100vh; overflow-x: hidden; position: relative;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            background: var(--bg-color);
-            background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,0) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0.1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,0.1) 0, transparent 50%);
-            color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh;
-            align-items: center; padding: 20px;
+        /* AMBIENT LIQUID BACKGROUND (CSS-Only) */
+        .bg-element {
+            position: fixed; border-radius: 50%; filter: blur(100px); opacity: 0.5; z-index: -1;
+            animation: float 12s infinite ease-in-out alternate; pointer-events: none;
+        }
+        .bg-1 { width: 50vw; height: 50vw; max-width: 500px; max-height: 500px; background: #8b5cf6; top: -10%; left: -10%; }
+        .bg-2 { width: 40vw; height: 40vw; max-width: 400px; max-height: 400px; background: #ec4899; bottom: -10%; right: -5%; animation-delay: -6s; }
+        .bg-3 { width: 30vw; height: 30vw; max-width: 300px; max-height: 300px; background: #3b82f6; top: 40%; left: 60%; animation-duration: 15s; }
+        
+        @keyframes float { 
+            0% { transform: translate(0, 0) scale(1); } 
+            100% { transform: translate(50px, 80px) scale(1.15); } 
         }
 
-        .header { text-align: center; margin: 30px 0; }
-        .header h1 { font-size: 2.2rem; font-weight: 800; background: -webkit-linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .header p { font-size: 1rem; color: var(--text-muted); margin-top: 5px; font-weight: 600; }
-
-        .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px; width: 100%; max-width: 900px;
+        /* LAYOUT ARCHITECTURE */
+        .container {
+            width: 100%; max-width: 1000px; padding: 40px 20px;
+            display: flex; flex-direction: column; flex: 1;
         }
 
-        .tool-card {
-            background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 20px; padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-decoration: none; color: var(--text-main); display: block;
+        /* HEADER */
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { 
+            font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); 
+            background: linear-gradient(to right, #a78bfa, #f472b6, #60a5fa); 
+            -webkit-background-clip: text; color: transparent; 
+            margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;
         }
-        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.3); }
+        .header p { font-size: 1.1rem; color: #94a3b8; font-weight: 300; }
 
-        .tool-card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; color: var(--primary); }
-        .tool-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.4; }
-
-        /* App-Style Ad Placement */
+        /* AD ZONE (Glassmorphic Variant) */
         .ad-zone {
-            width: 100%; max-width: 900px; background: #e5e7eb; border-radius: 16px; margin: 25px 0;
+            width: 100%; min-height: 90px; margin: 0 0 40px 0;
+            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
-            color: #9ca3af; font-size: 12px; font-weight: 600; border: 1px solid #d1d5db; min-height: 90px;
+            color: #64748b; font-size: 0.8rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
         }
 
-        footer { margin-top: auto; padding: 30px 0 10px; text-align: center; width: 100%; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 600; margin: 0 10px; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--primary); }
-        .disclaimer { margin-top: 15px; font-size: 0.75rem; color: #9ca3af; }
+        /* GRID SYSTEM */
+        .grid-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* GLASSMORPHIC TOOL CARDS */
+        .tool-card {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px;
+            padding: 30px 25px; text-decoration: none; color: #fff; display: flex; flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; position: relative;
+        }
+        
+        /* Micro-interactions */
+        .tool-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .tool-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; margin-bottom: 12px; color: #e2e8f0; }
+        .tool-card p { font-size: 0.95rem; color: #94a3b8; line-height: 1.5; font-weight: 300; margin-bottom: 20px; flex: 1;}
+
+        .card-action {
+            font-size: 0.85rem; font-weight: 700; color: #a78bfa; text-transform: uppercase;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .tool-card:hover .card-action { color: #f472b6; }
+
+        /* FOOTER */
+        footer {
+            width: 100%; padding: 30px 20px; margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        .footer-links a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; margin: 0 15px; font-weight: 500; }
+        .footer-links a:hover { color: #fff; }
+        .disclaimer { margin-top: 15px; font-size: 0.75rem; color: #475569; }
+
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>JOATMON Hub</h1>
-        <p>Your Daily Vibe & Viral Tools</p>
+    <div class="bg-element bg-1"></div>
+    <div class="bg-element bg-2"></div>
+    <div class="bg-element bg-3"></div>
+
+    <div class="container">
+        
+        <header class="header">
+            <h1>JOATMON</h1>
+            <p>High-Performance Tools & Diagnostics</p>
+        </header>
+
+        <div class="ad-zone">
+            
+        </div>
+
+        <main class="grid-container">
+            
+            <a href="/tools/vibe_check.html" class="tool-card">
+                <h3>The Vibe Check</h3>
+                <p>Execute a rapid diagnostic to determine your core internet persona.</p>
+                <div class="card-action">Initialize →</div>
+            </a>
+
+            <a href="/tools/love_calculator.html" class="tool-card">
+                <h3>Compatibility Engine</h3>
+                <p>Calculate interpersonal alignment using our deterministic algorithm.</p>
+                <div class="card-action">Initialize →</div>
+            </a>
+
+            <a href="/tools/secret_message.html" class="tool-card">
+                <h3>Encrypted Drop</h3>
+                <p>Generate a secure, anonymous message portal for your network.</p>
+                <div class="card-action">Initialize →</div>
+            </a>
+
+            <a href="/tools/festival_greeting.html" class="tool-card">
+                <h3>Dynamic Greetings</h3>
+                <p>Deploy personalized, animated viral payloads to WhatsApp contacts.</p>
+                <div class="card-action">Initialize →</div>
+            </a>
+
+        </main>
+
+        <div class="ad-zone">
+            
+        </div>
+
     </div>
-
-    <div class="ad-zone">[ ADSTERRA 728x90 OR NATIVE BANNER ]</div>
-
-    <div class="grid-container">
-        <a href="/tools/vibe_check.html" class="tool-card">
-            <h3>✨ The Vibe Check</h3>
-            <p>Scan your aura and discover your true internet personality.</p>
-        </a>
-
-        <a href="/tools/love_calculator.html" class="tool-card">
-            <h3>❤️ Love Calculator</h3>
-            <p>Secretly calculate your compatibility. 100% accurate AI algorithm.</p>
-        </a>
-
-        <a href="/tools/festival_greeting.html" class="tool-card">
-            <h3>🎉 Viral Greetings</h3>
-            <p>Create a custom animated greeting to forward on WhatsApp.</p>
-        </a>
-    </div>
-
-    <div class="ad-zone">[ ADSTERRA 728x90 OR NATIVE BANNER ]</div>
 
     <footer>
         <div class="footer-links">
@@ -94,7 +156,7 @@
             <a href="/policies/disclaimer.html">Disclaimer</a>
         </div>
         <div class="disclaimer">
-            © JOATMON Operations. For entertainment purposes only. We do not store personal data.
+            © JOATMON Operations. All processes execute locally. No persistent user data is stored.
         </div>
     </footer>
 
