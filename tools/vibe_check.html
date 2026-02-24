@@ -115,16 +115,15 @@
 
 <script>
     const questions = [
-        { q: "You arrive at a party. What's your first move?", options: ["Find the snacks", "Pet the host's dog", "Start a dance circle", "Judge the playlist from a corner"] },
-        { q: "How many unread emails are on your phone?", options: ["Zero. Inbox zero.", "Maybe 10-20?", "I stopped counting at 5,000.", "What's an email?"] },
-        { q: "Pick a late-night vibe:", options: ["Deep talks & stargazing", "Binge-watching shows", "Overthinking everything", "Eating shredded cheese at 3 AM"] },
-        { q: "When plans get canceled, you feel...", options: ["Relieved. Bedtime.", "Annoyed. I got ready!", "Meh. I'll make new plans.", "I was the one who canceled."] }
+        { q: "I see myself as: Extraverted, enthusiastic.", options: ["Disagree strongly", "Disagree", "Agree", "Agree strongly"] },
+        { q: "I see myself as: Dependable, self-disciplined.", options: ["Disagree strongly", "Disagree", "Agree", "Agree strongly"] },
+        { q: "I see myself as: Open to new experiences, complex.", options: ["Disagree strongly", "Disagree", "Agree", "Agree strongly"] },
+        { q: "I see myself as: Calm, emotionally stable.", options: ["Disagree strongly", "Disagree", "Agree", "Agree strongly"] }
     ];
-
     const auras = [
-        { name: "Golden ✨", desc: "You are pure sunshine, a bit chaotic, but everyone loves having you around." },
-        { name: "Midnight 🌙", desc: "Mysterious, slightly introverted, and running entirely on iced coffee." },
-        { name: "Electric ⚡", desc: "High energy, highly unpredictable, and probably the funniest person in the room." }
+        { name: "Golden ✨", desc: "High positive traits (Big Five validated): outgoing, stable sunshine everyone loves." },
+        { name: "Midnight 🌙", desc: "Lower-moderate traits: introspective, complex, deep iced-coffee energy." },
+        { name: "Electric ⚡", desc: "High openness/dependability: creative, reliable, high-vibe spark." }
     ];
 
     let currentIdx = 0; let score = 0;
