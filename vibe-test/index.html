@@ -3,141 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TERMINAL // VIBE_SCAN</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>The Vibe Check | JOATMON</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --term-green: #10b981;
-            --term-bg: #050505;
-            --term-dim: #064e3b;
-            --ad-gold: #fbbf24; /* Used to frame ads for "High Importance" feel */
+            --bg-color: #f3f4f6;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --primary: #8b5cf6; /* Vibrant Purple */
+            --secondary: #ec4899; /* Vibrant Pink */
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background: var(--term-bg);
-            color: var(--term-green);
-            font-family: 'JetBrains Mono', monospace;
-            margin: 0; padding: 20px;
-            line-height: 1.5;
+            background: var(--bg-color);
+            background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,0) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0.1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,0.1) 0, transparent 50%);
+            color: var(--text-main);
+            display: flex; flex-direction: column; min-height: 100vh;
+            align-items: center; justify-content: center; padding: 20px;
         }
 
-        /* Ad Integration: The "Data Stream" Frame */
-        .ad-stream-box {
-            border: 1px solid var(--term-dim);
-            margin: 15px 0;
-            padding: 5px;
-            text-align: center;
+        .app-container {
+            width: 100%; max-width: 450px; /* Mobile-first sizing */
             position: relative;
         }
-        .ad-stream-box::before {
-            content: "EXTERNAL_TRANSMISSION_INCOMING";
-            position: absolute; top: -10px; left: 10px;
-            background: var(--term-bg); padding: 0 5px;
-            font-size: 9px; color: var(--ad-gold);
+
+        /* The Ad Zones - Styled to look like native app banners */
+        .ad-zone {
+            width: 100%; background: #e5e7eb; border-radius: 16px; margin: 15px 0;
+            display: flex; align-items: center; justify-content: center;
+            color: #9ca3af; font-size: 12px; font-weight: 600; overflow: hidden;
+            border: 1px solid #d1d5db; min-height: 60px;
         }
 
-        .container { max-width: 600px; margin: 0 auto; }
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px; padding: 30px 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { font-size: 1.8rem; font-weight: 800; background: -webkit-linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header p { font-size: 0.9rem; color: var(--text-muted); margin-top: 5px; }
+
+        /* Progress Bar Animation */
+        .progress-track { background: #e5e7eb; height: 8px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 10px; transition: width 0.6s ease; }
+
+        /* Quiz UI */
+        #question-text { font-size: 1.3rem; font-weight: 600; text-align: center; margin-bottom: 25px; line-height: 1.4; }
+
+        .btn-option {
+            width: 100%; background: white; border: 2px solid #e5e7eb;
+            padding: 16px; border-radius: 16px; margin-bottom: 12px;
+            font-size: 1rem; font-weight: 600; color: var(--text-main);
+            cursor: pointer; transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
         
-        .header { border-bottom: 1px solid var(--term-green); padding-bottom: 10px; margin-bottom: 20px; }
-        .glitch { font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+        /* Bouncy Micro-interaction */
+        .btn-option:active { transform: scale(0.96); border-color: var(--primary); background: #f3f0ff; }
 
-        .scan-card {
-            border: 1px solid var(--term-green);
-            padding: 30px;
-            position: relative;
-            background: rgba(16, 185, 129, 0.02);
+        /* Action Button */
+        .btn-action {
+            width: 100%; background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white; border: none; padding: 18px; border-radius: 16px;
+            font-size: 1.1rem; font-weight: 800; cursor: pointer;
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3); transition: all 0.2s ease;
         }
+        .btn-action:active { transform: scale(0.96); box-shadow: 0 5px 10px rgba(139, 92, 246, 0.2); }
 
-        .btn-opt {
-            display: block; width: 100%; padding: 12px;
-            background: transparent; color: var(--term-green);
-            border: 1px solid var(--term-green);
-            margin-top: 10px; cursor: pointer;
-            text-align: left; font-family: 'JetBrains Mono';
-        }
-        .btn-opt:hover { background: var(--term-green); color: var(--term-bg); }
-
-        .progress-container { margin-bottom: 20px; font-size: 12px; }
+        #result-screen { display: none; text-align: center; }
         
-        #result-screen { display: none; }
-        .trait-row { margin: 10px 0; font-size: 14px; }
-        .trait-bar-bg { background: var(--term-dim); height: 8px; width: 100%; margin-top: 5px; }
-        .trait-bar-fill { background: var(--term-green); height: 100%; width: 0%; transition: width 1s; }
+        /* Loading Spinner */
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(139, 92, 246, 0.2); border-left-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; display: none;}
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .methodology-link { 
-            font-size: 10px; color: var(--term-dim); margin-top: 40px; text-align: center; 
-        }
+        .trust-badge { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <div class="glitch">JOATMON // NEURAL_SCAN_v2.6</div>
-        <div style="font-size: 10px; opacity: 0.6;">LOCATING_USER...</div>
-    </div>
+<div class="app-container">
+    
+    <div class="ad-zone">[ SPONSORED AD PLACEMENT ]</div>
 
-    <div class="ad-stream-box">
-        <div style="height: 50px; display: flex; align-items: center; justify-content: center; opacity: 0.3;">STREAM_CONTENT_01</div>
-    </div>
-
-    <div id="quiz-screen" class="scan-card">
-        <div class="progress-container">SCAN_PROGRESS: <span id="prog-val">0%</span></div>
-        <div id="question-text">INITIALIZING_PSYCHOMETRIC_ARRAY...</div>
-        <div id="options-box" style="margin-top: 20px;"></div>
-    </div>
-
-    <div id="result-screen" class="scan-card">
-        <h2 style="color: var(--ad-gold);">SCAN_COMPLETE</h2>
-        <p id="vibe-summary" style="font-size: 14px; margin-bottom: 20px;"></p>
+    <div class="glass-card" id="main-card">
         
-        <div id="trait-analysis"></div>
+        <div class="header">
+            <h1>The Vibe Check</h1>
+            <p>Discover your true aura.</p>
+        </div>
 
-        <button class="btn-opt" onclick="window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent('My Vibe Scan is complete. Check yours at ' + window.location.href))" style="margin-top: 30px; border-color: var(--ad-gold); color: var(--ad-gold);">FORWARD_TO_NETWORK (WhatsApp)</button>
+        <div id="quiz-screen">
+            <div class="progress-track"><div class="progress-fill" id="prog-val"></div></div>
+            <div id="question-text">Loading the vibe...</div>
+            <div id="options-box"></div>
+        </div>
+
+        <div id="result-screen">
+            <div class="spinner" id="loading-spinner"></div>
+            <div id="result-content" style="display:none;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 10px; font-weight: 800; color: var(--primary);">Your Aura is <span id="aura-name">...</span></h2>
+                <p id="aura-desc" style="margin-bottom: 30px; font-size: 1rem; color: var(--text-muted); line-height: 1.5;"></p>
+                <button class="btn-action" onclick="shareResult()">Share on WhatsApp</button>
+            </div>
+        </div>
+        
     </div>
 
-    <div class="ad-stream-box">
-        <div style="height: 50px; display: flex; align-items: center; justify-content: center; opacity: 0.3;">STREAM_CONTENT_02</div>
-    </div>
+    <div class="ad-zone">[ SPONSORED AD PLACEMENT ]</div>
 
-    <div class="methodology-link">
-        CORE_LOGIC: FIVE-FACTOR_MODEL (OCEAN) | NO_DATA_RETENTION
-    </div>
+    <div class="trust-badge">🔒 100% Private. No data is stored.</div>
+
 </div>
 
 <script>
-    // Validated Scientific Questions
+    // Streamlined logic for mass-appeal (Fun, shareable results)
     const questions = [
-        { q: "I enjoy complex, philosophical ideas.", trait: "O" },
-        { q: "I am always prepared and organized.", trait: "C" },
-        { q: "I am the life of the party.", trait: "E" },
-        { q: "I tend to find fault with others.", trait: "A", reverse: true },
-        { q: "I get stressed out easily.", trait: "N" }
+        { q: "You arrive at a party. What's your first move?", options: ["Find the snacks", "Pet the host's dog", "Start a dance circle", "Judge the playlist from a corner"] },
+        { q: "How many unread emails are on your phone?", options: ["Zero. Inbox zero.", "Maybe 10-20?", "I stopped counting at 5,000.", "What's an email?"] },
+        { q: "Pick a late-night vibe:", options: ["Deep talks & stargazing", "Binge-watching shows", "Overthinking everything", "Eating shredded cheese at 3 AM"] },
+        { q: "When plans get canceled, you feel...", options: ["Relieved. Bedtime.", "Annoyed. I got ready!", "Meh. I'll make new plans.", "I was the one who canceled."] }
     ];
 
-    let scores = { O: 0, C: 0, E: 0, A: 0, N: 0 };
+    const auras = [
+        { name: "Golden ✨", desc: "You are pure sunshine, a bit chaotic, but everyone loves having you around." },
+        { name: "Midnight 🌙", desc: "Mysterious, slightly introverted, and running entirely on iced coffee." },
+        { name: "Electric ⚡", desc: "High energy, highly unpredictable, and probably the funniest person in the room." }
+    ];
+
     let currentIdx = 0;
+    let score = 0;
 
     function renderQuestion() {
         if(currentIdx >= questions.length) { showResults(); return; }
         
         const q = questions[currentIdx];
-        document.getElementById('question-text').innerText = `[QUERY_${currentIdx+1}]: ${q.q}`;
-        document.getElementById('prog-val').innerText = Math.round((currentIdx / questions.length) * 100) + "%";
+        document.getElementById('question-text').innerText = q.q;
+        
+        // Animate progress
+        setTimeout(() => { document.getElementById('prog-val').style.width = ((currentIdx) / questions.length * 100) + "%"; }, 50);
 
         const box = document.getElementById('options-box');
         box.innerHTML = '';
         
-        const opts = ["STRONGLY_DISAGREE", "DISAGREE", "NEUTRAL", "AGREE", "STRONGLY_AGREE"];
-        opts.forEach((label, val) => {
+        q.options.forEach((label, val) => {
             const b = document.createElement('button');
-            b.className = 'btn-opt';
-            b.innerText = `> ${label}`;
+            b.className = 'btn-option';
+            b.innerText = label;
             b.onclick = () => {
-                let points = val + 1;
-                if(q.reverse) points = 6 - points;
-                scores[q.trait] += points;
+                score += val;
                 currentIdx++;
                 renderQuestion();
             };
@@ -148,20 +171,24 @@
     function showResults() {
         document.getElementById('quiz-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('loading-spinner').style.display = 'block';
         
-        document.getElementById('vibe-summary').innerText = "Psychometric analysis complete. Your neural signature shows high alignment with the following traits based on the Five-Factor Model.";
+        // Artificial delay for tension (keeps them on page longer for ads)
+        setTimeout(() => {
+            document.getElementById('loading-spinner').style.display = 'none';
+            document.getElementById('result-content').style.display = 'block';
+            
+            const finalAura = auras[score % auras.length];
+            document.getElementById('aura-name').innerText = finalAura.name;
+            document.getElementById('aura-desc').innerText = finalAura.desc;
+            document.getElementById('prog-val').style.width = "100%";
+        }, 1500);
+    }
 
-        const analysis = document.getElementById('trait-analysis');
-        for(let trait in scores) {
-            const pct = (scores[trait] / 5) * 100;
-            const labels = {O: "OPENNESS", C: "CONSCIENTIOUSNESS", E: "EXTRAVERSION", A: "AGREEABLENESS", N: "NEUROTICISM"};
-            analysis.innerHTML += `
-                <div class="trait-row">
-                    ${labels[trait]} [${Math.round(pct)}%]
-                    <div class="trait-bar-bg"><div class="trait-bar-fill" style="width: ${pct}%"></div></div>
-                </div>
-            `;
-        }
+    function shareResult() {
+        const aura = document.getElementById('aura-name').innerText;
+        const text = `I just took the Vibe Check and my aura is ${aura}! Find out yours here: `;
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + window.location.href)}`);
     }
 
     renderQuestion();
