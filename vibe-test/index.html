@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Check | JOATMON</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap');
+
+        :root {
+            --bg-color: #121212;         
+            --card-bg: #242220;          
+            --gold-accent: #D4AF37;      
+            --red-action: #A22323;       
+            --text-main: #F3E5AB;        
+            --text-muted: #A09E9A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            font-family: 'Inter', sans-serif; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+        
+        header { 
+            text-align: center; padding: 20px; 
+            border-bottom: 2px solid var(--red-action);
+            background: linear-gradient(180deg, rgba(162,35,35,0.1) 0%, rgba(18,18,18,0) 100%);
+        }
+        
+        h1 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold-accent); text-transform: uppercase; }
+        .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 10px; display: inline-block;}
+        .back-link:hover { color: var(--gold-accent); }
+        
+        main { flex: 1; padding: 20px; max-width: 600px; margin: 0 auto; width: 100%; text-align: center; }
+        
+        /* Quiz Container */
+        .quiz-container {
+            background: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .progress-bar { width: 100%; height: 5px; background: #333; margin-bottom: 20px; border-radius: 5px; overflow: hidden;}
+        .progress-fill { height: 100%; background: var(--gold-accent); width: 0%; transition: width 0.3s ease; }
+
+        #question-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold-accent); margin-bottom: 25px; line-height: 1.3;}
+        
+        .options-grid { display: flex; flex-direction: column; gap: 15px; }
+        
+        .option-btn { 
+            background: transparent; 
+            color: var(--text-main); 
+            border: 1px solid var(--gold-accent); 
+            padding: 15px; 
+            border-radius: 5px; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .option-btn:hover { background: rgba(212, 175, 55, 0.1); transform: translateX(5px); }
+        
+        /* Results Section */
+        #result-section { display: none; }
+        #result-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--red-action); margin-bottom: 10px; }
+        #result-desc { font-size: 1rem; color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; }
+        
+        .btn { 
+            display: inline-block; background: var(--red-action); color: #fff; text-decoration: none; 
+            padding: 12px 20px; border-radius: 4px; font-weight: 600; width: 100%; 
+            border: 1px solid #7a1919; text-transform: uppercase; cursor: pointer; margin-bottom: 10px;
+        }
+        .btn:hover { background: #b82b2b; }
+        
+        .ad-slot { width: 100%; min-height: 50px; background: #000; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: #444; font-size: 0.8rem; border: 1px dashed #333; }
+        
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; border-top: 1px solid #333; margin-top: auto;}
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="back-link">← Back to Hub</a>
+        <h1>The Vibe Check</h1>
+    </header>
+
+    <main>
+        <div class="ad-slot">[Adsterra Banner Slot 1]</div>
+
+        <div class="quiz-container" id="quiz-container">
+            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+            <h2 id="question-text">Loading question...</h2>
+            <div class="options-grid" id="options-grid">
+                </div>
+        </div>
+
+        <div class="quiz-container" id="result-section">
+            <h2 id="result-title">Your Vibe</h2>
+            <p id="result-desc">Calculating...</p>
+            <button class="btn" onclick="shareResult()">Share to WhatsApp</button>
+            <button class="btn" style="background: transparent; border: 1px solid var(--text-muted); margin-top: 10px;" onclick="location.reload()">Retake Test</button>
+        </div>
+
+        <div class="ad-slot">[Adsterra Banner Slot 2]</div>
+    </main>
+
+    <footer>
+        <div style="opacity: 0.5;">© JOATMON Operations | For Entertainment Purposes Only.</div>
+    </footer>
+
+    <script>
+        // --- DATA STRUCTURE ---
+        const questions = [
+            { q: "What is your weapon of choice?", options: ["Sarcasm", "Silence", "Relentless Logic", "Pure Chaos"] },
+            { q: "Choose a vintage artifact:", options: ["A Broken Pocket Watch", "A Silver Flask", "A Blood-Stained Quill", "A Dusty Tome"] },
+            { q: "Your sleep schedule is best described as...", options: ["Strictly 8 Hours", "Nocturnal", "4 Hours of Micro-Naps", "What is sleep?"] },
+            { q: "How do you handle a crisis?", options: ["Ignore it until it vanishes", "Panic immediately", "Formulate a master plan", "Make a meme about it"] },
+            { q: "What is your ultimate goal?", options: ["Absolute Power", "Unbothered Peace", "Infinite Wealth", "To watch the world burn"] }
+        ];
+
+        const results = [
+            { title: "The Mastermind", desc: "Cold, calculated, and always three steps ahead. You view life as a chess board, and everyone else is just a pawn." },
+            { title: "The Chaotic Neutral", desc: "You thrive in the madness. You don't have a plan, but you somehow always end up exactly where you need to be." },
+            { title: "The Old Soul", desc: "You are tired. You have been tired since birth. You seek peace, quiet, and a timeline where people leave you alone." },
+            { title: "The Hustler", desc: "Sleep is for the weak. You are running on caffeine, ambition, and pure unadulterated stress." }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let currentQuestion = 0;
+        let score = 0; // Simple arbitrary score tracker
+
+        // --- CORE LOGIC ---
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) {
+                showResult();
+                return;
+            }
+
+            const qData = questions[currentQuestion];
+            document.getElementById('question-text').innerText = qData.q;
+            
+            // Update Progress Bar
+            const progressPct = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progress').style.width = progressPct + '%';
+
+            const optionsGrid = document.getElementById('options-grid');
+            optionsGrid.innerHTML = '';
+
+            qData.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => handleAnswer(index);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(index) {
+            score += index; // Arbitrary calculation for variety
+            currentQuestion++;
+            
+            // Architect's Note: If you have an Adsterra refresh function, call it here.
+            // Example: if(typeof reloadAds === 'function') reloadAds();
+
+            loadQuestion();
+        }
+
+        function showResult() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+            
+            // Pseudo-random result based on answers
+            const finalVibe = results[score % results.length]; 
+            
+            document.getElementById('result-title').innerText = finalVibe.title;
+            document.getElementById('result-desc').innerText = finalVibe.desc;
+        }
+
+        function shareResult() {
+            const title = document.getElementById('result-title').innerText;
+            const text = `I just took the JOATMON Vibe Check and got: ${title}. Find out your true internet personality here!`;
+            const url = window.location.href;
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + url)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Initialize App
+        loadQuestion();
+    </script>
+</body>
+</html>
