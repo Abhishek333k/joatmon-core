@@ -4,99 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Vibe Check | JOATMON</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg-color: #f3f4f6;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --primary: #8b5cf6; /* Vibrant Purple */
-            --secondary: #ec4899; /* Vibrant Pink */
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        body { 
+            background: #0f172a; color: #fff; font-family: 'Inter', sans-serif; 
+            min-height: 100vh; overflow-x: hidden; position: relative;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            background: var(--bg-color);
-            background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,0) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0.1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,0.1) 0, transparent 50%);
-            color: var(--text-main);
-            display: flex; flex-direction: column; min-height: 100vh;
-            align-items: center; justify-content: center; padding: 20px;
+        /* AMBIENT BACKGROUND */
+        .bg-element {
+            position: fixed; border-radius: 50%; filter: blur(100px); opacity: 0.5; z-index: -1;
+            animation: float 12s infinite ease-in-out alternate; pointer-events: none;
         }
+        .bg-1 { width: 50vw; height: 50vw; max-width: 500px; max-height: 500px; background: #8b5cf6; top: -10%; left: -10%; }
+        .bg-2 { width: 40vw; height: 40vw; max-width: 400px; max-height: 400px; background: #ec4899; bottom: -10%; right: -5%; animation-delay: -6s; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 80px) scale(1.15); } }
 
-        .app-container {
-            width: 100%; max-width: 450px; /* Mobile-first sizing */
-            position: relative;
-        }
+        .app-container { width: 100%; max-width: 450px; position: relative; }
 
-        /* The Ad Zones - Styled to look like native app banners */
+        /* AD ZONE (Ready for Banners, NOT Popunders) */
         .ad-zone {
-            width: 100%; background: #e5e7eb; border-radius: 16px; margin: 15px 0;
+            width: 100%; min-height: 60px; margin: 15px 0;
+            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px);
+            border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
-            color: #9ca3af; font-size: 12px; font-weight: 600; overflow: hidden;
-            border: 1px solid #d1d5db; min-height: 60px;
+            color: #64748b; font-size: 0.8rem; font-weight: 500; text-transform: uppercase;
         }
 
-        /* Glassmorphism Card */
+        /* LIQUID GLASS CARD */
         .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 24px; padding: 30px 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px;
+            padding: 30px 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;
         }
 
-        .header { text-align: center; margin-bottom: 25px; }
-        .header h1 { font-size: 1.8rem; font-weight: 800; background: -webkit-linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .header p { font-size: 0.9rem; color: var(--text-muted); margin-top: 5px; }
+        .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; background: linear-gradient(to right, #a78bfa, #f472b6); -webkit-background-clip: text; color: transparent; margin-bottom: 5px; }
+        .header p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 25px; }
 
-        /* Progress Bar Animation */
-        .progress-track { background: #e5e7eb; height: 8px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
-        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 10px; transition: width 0.6s ease; }
+        .progress-track { background: rgba(255,255,255,0.1); height: 8px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #a78bfa, #f472b6); transition: width 0.6s ease; }
 
-        /* Quiz UI */
-        #question-text { font-size: 1.3rem; font-weight: 600; text-align: center; margin-bottom: 25px; line-height: 1.4; }
+        #question-text { font-size: 1.2rem; font-weight: 500; margin-bottom: 25px; line-height: 1.4; color: #e2e8f0; }
 
+        /* BUTTONS */
         .btn-option {
-            width: 100%; background: white; border: 2px solid #e5e7eb;
-            padding: 16px; border-radius: 16px; margin-bottom: 12px;
-            font-size: 1rem; font-weight: 600; color: var(--text-main);
-            cursor: pointer; transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px; border-radius: 16px; margin-bottom: 12px; color: #fff; cursor: pointer;
+            font-size: 1rem; font-weight: 500; font-family: 'Inter', sans-serif;
         }
-        
-        /* Bouncy Micro-interaction */
-        .btn-option:active { transform: scale(0.96); border-color: var(--primary); background: #f3f0ff; }
+        .btn-option:hover { background: rgba(255,255,255,0.1); border-color: #a78bfa; transform: scale(0.98); }
 
-        /* Action Button */
         .btn-action {
-            width: 100%; background: linear-gradient(45deg, var(--primary), var(--secondary));
+            width: 100%; background: linear-gradient(45deg, #a78bfa, #f472b6);
             color: white; border: none; padding: 18px; border-radius: 16px;
-            font-size: 1.1rem; font-weight: 800; cursor: pointer;
-            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3); transition: all 0.2s ease;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 15px;
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
         }
-        .btn-action:active { transform: scale(0.96); box-shadow: 0 5px 10px rgba(139, 92, 246, 0.2); }
+        .btn-action:hover { transform: scale(0.96); box-shadow: 0 5px 10px rgba(139, 92, 246, 0.2); }
 
-        #result-screen { display: none; text-align: center; }
-        
-        /* Loading Spinner */
-        .spinner { width: 40px; height: 40px; border: 4px solid rgba(139, 92, 246, 0.2); border-left-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; display: none;}
+        #result-screen, .spinner { display: none; }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(139, 92, 246, 0.2); border-left-color: #a78bfa; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .trust-badge { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
 
+<div class="bg-element bg-1"></div>
+<div class="bg-element bg-2"></div>
+
 <div class="app-container">
-    
-    <div class="ad-zone"><script src="https://pl28785129.effectivegatecpm.com/f2/e2/de/f2e2de0100fd2988cfc2a7ff3b1b2e64.js"></script></div>
+    <div class="ad-zone">[ NATIVE BANNER ZONE ]</div>
 
     <div class="glass-card" id="main-card">
-        
         <div class="header">
             <h1>The Vibe Check</h1>
             <p>Discover your true aura.</p>
@@ -111,22 +95,18 @@
         <div id="result-screen">
             <div class="spinner" id="loading-spinner"></div>
             <div id="result-content" style="display:none;">
-                <h2 style="font-size: 1.5rem; margin-bottom: 10px; font-weight: 800; color: var(--primary);">Your Aura is <span id="aura-name">...</span></h2>
-                <p id="aura-desc" style="margin-bottom: 30px; font-size: 1rem; color: var(--text-muted); line-height: 1.5;"></p>
+                <h2 style="font-size: 1.5rem; margin-bottom: 10px; color: #fff;">Your Aura is <span id="aura-name" style="color: #a78bfa;">...</span></h2>
+                <p id="aura-desc" style="margin-bottom: 30px; font-size: 0.95rem; color: #94a3b8; line-height: 1.5;"></p>
                 <button class="btn-action" onclick="shareResult()">Share on WhatsApp</button>
+                <button class="btn-option" style="margin-top: 10px;" onclick="location.reload()">Retake Diagnostic</button>
             </div>
         </div>
-        
     </div>
 
-    <div class="ad-zone">[ SPONSORED AD PLACEMENT ]</div>
-
-    <div class="trust-badge">🔒 100% Private. No data is stored.</div>
-
+    <div class="ad-zone">[ NATIVE BANNER ZONE ]</div>
 </div>
 
 <script>
-    // Streamlined logic for mass-appeal (Fun, shareable results)
     const questions = [
         { q: "You arrive at a party. What's your first move?", options: ["Find the snacks", "Pet the host's dog", "Start a dance circle", "Judge the playlist from a corner"] },
         { q: "How many unread emails are on your phone?", options: ["Zero. Inbox zero.", "Maybe 10-20?", "I stopped counting at 5,000.", "What's an email?"] },
@@ -140,30 +120,22 @@
         { name: "Electric ⚡", desc: "High energy, highly unpredictable, and probably the funniest person in the room." }
     ];
 
-    let currentIdx = 0;
-    let score = 0;
+    let currentIdx = 0; let score = 0;
 
     function renderQuestion() {
         if(currentIdx >= questions.length) { showResults(); return; }
         
-        const q = questions[currentIdx];
-        document.getElementById('question-text').innerText = q.q;
-        
-        // Animate progress
+        document.getElementById('question-text').innerText = questions[currentIdx].q;
         setTimeout(() => { document.getElementById('prog-val').style.width = ((currentIdx) / questions.length * 100) + "%"; }, 50);
 
         const box = document.getElementById('options-box');
         box.innerHTML = '';
         
-        q.options.forEach((label, val) => {
+        questions[currentIdx].options.forEach((label, val) => {
             const b = document.createElement('button');
             b.className = 'btn-option';
             b.innerText = label;
-            b.onclick = () => {
-                score += val;
-                currentIdx++;
-                renderQuestion();
-            };
+            b.onclick = () => { score += val; currentIdx++; renderQuestion(); };
             box.appendChild(b);
         });
     }
@@ -173,7 +145,6 @@
         document.getElementById('result-screen').style.display = 'block';
         document.getElementById('loading-spinner').style.display = 'block';
         
-        // Artificial delay for tension (keeps them on page longer for ads)
         setTimeout(() => {
             document.getElementById('loading-spinner').style.display = 'none';
             document.getElementById('result-content').style.display = 'block';
@@ -186,13 +157,13 @@
     }
 
     function shareResult() {
-        const aura = document.getElementById('aura-name').innerText;
-        const text = `I just took the Vibe Check and my aura is ${aura}! Find out yours here: `;
+        const text = `I just took the Vibe Check and my aura is ${document.getElementById('aura-name').innerText}! Find out yours here: `;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + window.location.href)}`);
     }
 
     renderQuestion();
 </script>
-    <script src="https://pl28785129.effectivegatecpm.com/f2/e2/de/f2e2de0100fd2988cfc2a7ff3b1b2e64.js"></script>
+
+<script src="https://pl28785129.effectivegatecpm.com/f2/e2/de/f2e2de0100fd2988cfc2a7ff3b1b2e64.js"></script>
 </body>
 </html>
