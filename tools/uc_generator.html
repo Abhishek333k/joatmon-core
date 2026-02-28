@@ -1,0 +1,179 @@
+<!-- JOATMON_META={"title": "UC & Diamond Injector", "desc": "Generate up to 10,000 Free UC or Diamonds for BGMI/Free Fire.", "url": "/tools/uc_generator.html"} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC & Diamond Injector | JOATMON</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    
+    <script src="https://hospitalforgery.com/a3/a8/da/a3a8dad0cd879fa3e0cfdd204d52200b.js"></script>
+
+    <style>
+        :root { --bg-color: #050505; --card-bg: rgba(20, 20, 20, 0.8); --primary: #10b981; /* Neon Green */ --secondary: #3b82f6; /* Blue */ --text-main: #ffffff; --text-muted: #94a3b8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg-color); color: var(--text-main); min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        
+        .bg-element { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.25; z-index: -1; pointer-events: none; animation: float 18s infinite ease-in-out alternate; }
+        .bg-1 { width: 60vw; height: 60vw; max-width: 600px; background: #10b981; top: -15%; left: -15%; }
+        .bg-2 { width: 50vw; height: 50vw; max-width: 500px; background: #3b82f6; bottom: -15%; right: -10%; animation-delay: -9s; }
+        @keyframes float { 0%,100% { transform:translate(0,0) scale(1); } 50% { transform:translate(60px,90px) scale(1.12); } }
+
+        .layout-wrapper { display: flex; justify-content: center; width: 100%; max-width: 1200px; gap: 20px; }
+        .sidebar { display: none; align-items: center; justify-content: flex-start; flex-direction: column; gap: 20px; }
+        @media (min-width: 900px) { .sidebar { display: flex; width: 160px; } }
+        .app-container { width: 100%; max-width: 450px; z-index: 1; text-align: center; }
+
+        .ad-zone { width: 100%; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 16px; margin: 15px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; padding: 5px; min-height: 60px; }
+        
+        .glass-card { background: var(--card-bg); border: 1px solid #10b981; border-radius: 28px; padding: 32px 24px; box-shadow: 0 0 40px rgba(16, 185, 129, 0.2); text-align: center; position: relative; overflow: hidden; }
+        .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; color: #10b981; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 10px rgba(16,185,129,0.5); }
+        .header p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px; }
+
+        .input-box, .select-box { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(0,0,0,0.5); color: white; font-size: 1rem; margin-bottom: 15px; outline: none; }
+        .select-box { cursor: pointer; appearance: none; -webkit-appearance: none; }
+        .btn-action { width: 100%; background: linear-gradient(45deg, #10b981, #059669); color: white; border: none; padding: 18px; border-radius: 12px; font-size: 1.15rem; font-weight: 800; cursor: pointer; text-transform: uppercase; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); transition: transform 0.2s; margin-top: 10px; letter-spacing: 1px; }
+        .btn-action:active { transform: scale(0.96); }
+        .btn-action.red { background: linear-gradient(45deg, #ef4444, #dc2626); box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); }
+
+        /* Hacker Terminal UI */
+        #scanner-ui { display: none; margin-top: 20px; }
+        .terminal { background: #000; border-radius: 8px; padding: 15px; text-align: left; font-family: 'Courier New', Courier, monospace; color: #10b981; font-size: 0.85rem; height: 160px; overflow-y: hidden; margin-bottom: 15px; border: 1px solid #10b981; box-shadow: inset 0 0 15px rgba(16,185,129,0.1); line-height: 1.4; }
+        .progress-track { background: rgba(255,255,255,0.1); height: 12px; border-radius: 10px; overflow: hidden; margin-bottom: 15px; }
+        .progress-fill { height: 100%; width: 0%; background: #10b981; transition: width 0.2s; box-shadow: 0 0 10px #10b981; }
+        
+        .warning-text { color: #ef4444; font-weight: bold; margin-top: 15px; font-size: 1.1rem; display: none; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="bg-element bg-1"></div>
+<div class="bg-element bg-2"></div>
+
+<div class="layout-wrapper">
+    <div class="sidebar">
+        <script> atOptions = { 'key' : 'f4d760addfde946110731598ecfc8e84', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} }; </script>
+        <script src="https://hospitalforgery.com/f4d760addfde946110731598ecfc8e84/invoke.js"></script>
+    </div>
+
+    <div class="app-container">
+        <div class="ad-zone">
+            <script> atOptions = { 'key' : '52dbf840240c3c462cae34b522b930d7', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} }; </script>
+            <script src="https://hospitalforgery.com/52dbf840240c3c462cae34b522b930d7/invoke.js"></script>
+        </div>
+
+        <div class="glass-card" id="main-card">
+            <div class="header">
+                <h1>Resource Injector</h1>
+                <p>v2.4.1 - BGMI / Free Fire Bypass</p>
+            </div>
+
+            <div id="input-screen">
+                <input type="text" id="player-id" class="input-box" placeholder="Enter Player ID or Username" autocomplete="off">
+                <select id="game-select" class="select-box">
+                    <option value="BGMI">BGMI (India)</option>
+                    <option value="FreeFire">Free Fire (Global)</option>
+                </select>
+                <select id="platform-select" class="select-box">
+                    <option value="Android">Android</option>
+                    <option value="iOS">iOS</option>
+                </select>
+                <select id="resource-count" class="select-box">
+                    <option value="1000">Inject 1,000 UC / Diamonds</option>
+                    <option value="5000">Inject 5,000 UC / Diamonds</option>
+                    <option value="10000">Inject 10,000 UC / Diamonds 🔥</option>
+                </select>
+                <button class="btn-action" onclick="startInjection()">CONNECT & INJECT</button>
+            </div>
+
+            <div id="scanner-ui">
+                <h3 style="margin-bottom: 15px; color: #10b981; text-transform: uppercase; font-size: 1rem;">Establishing secure tunnel...</h3>
+                
+                <div class="terminal" id="terminal-text">Starting server bridge...<br></div>
+                
+                <div class="progress-track"><div class="progress-fill" id="prog-val"></div></div>
+                
+                <div class="ad-zone" style="margin-top: 15px; border-color: rgba(16, 185, 129, 0.3);">
+                    <script async="async" data-cfasync="false" src="https://hospitalforgery.com/bd3d9035186c17d583b639becb6229e5/invoke.js"></script>
+                    <div id="container-bd3d9035186c17d583b639becb6229e5"></div>
+                </div>
+
+                <div class="warning-text" id="final-warning">BOT DETECTED! VERIFICATION REQUIRED</div>
+                <button class="btn-action red" id="verify-btn" style="display:none; margin-top: 15px;" onclick="window.open('https://hospitalforgery.com/hnj65y61c?key=ebb4b287e3d00e14e2e3a9b5493fbb8b', '_blank')">CLICK TO VERIFY (ANTI-BAN)</button>
+            </div>
+        </div>
+
+        <div class="ad-zone">
+            <script> atOptions = { 'key' : 'a198363561af78bcc061564881d723aa', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script>
+            <script src="https://hospitalforgery.com/a198363561af78bcc061564881d723aa/invoke.js"></script>
+        </div>
+
+        <div class="ad-zone">
+            <script> atOptions = { 'key' : '40d41f9edbaad476b4d30cf0760ba0ac', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} }; </script>
+            <script src="https://hospitalforgery.com/40d41f9edbaad476b4d30cf0760ba0ac/invoke.js"></script>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <script> atOptions = { 'key' : 'b1516323541f80440d74319871b44aa4', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} }; </script>
+        <script src="https://hospitalforgery.com/b1516323541f80440d74319871b44aa4/invoke.js"></script>
+    </div>
+</div>
+
+<script>
+    function startInjection() {
+        const id = document.getElementById('player-id').value.trim();
+        const game = document.getElementById('game-select').value;
+        const res = document.getElementById('resource-count').value;
+        const plat = document.getElementById('platform-select').value;
+        
+        if(id.length < 5) { alert('Please enter a valid Player ID.'); return; }
+
+        document.getElementById('input-screen').style.display = 'none';
+        document.getElementById('scanner-ui').style.display = 'block';
+
+        const terminal = document.getElementById('terminal-text');
+        const progress = document.getElementById('prog-val');
+        
+        const logs = [
+            `Connecting to ${game} (${plat}) database...`,
+            `Searching for Player ID: [${id}]...`,
+            "ID Found! Bypassing security protocols...",
+            "SSL Tunnel encrypted.",
+            "Injecting script payload...",
+            `Generating ${res} Resources...`,
+            "Adding to account balance...",
+            "Verifying transaction integrity...",
+            "<span style='color:yellow;'>WARNING: Unusual activity detected.</span>",
+            "<span style='color:red;'>ERROR: Anti-Bot system triggered.</span>",
+            "Pausing injection to prevent account ban."
+        ];
+
+        let p = 0; let logIdx = 0;
+
+        const interval = setInterval(() => {
+            p += Math.floor(Math.random() * 6) + 2;
+            if (p > 95) p = 95; // Gets stuck at 95%
+            progress.style.width = p + "%";
+
+            if (p % 10 === 0 && logIdx < logs.length) {
+                terminal.innerHTML += logs[logIdx] + "<br>";
+                terminal.scrollTop = terminal.scrollHeight;
+                logIdx++;
+            }
+
+            // Trigger the fake human verification wall
+            if (logIdx >= logs.length) {
+                clearInterval(interval);
+                document.getElementById('final-warning').style.display = 'block';
+                setTimeout(() => { document.getElementById('verify-btn').style.display = 'block'; }, 1000);
+            }
+        }, 300);
+    }
+</script>
+
+<script src="https://hospitalforgery.com/f2/e2/de/f2e2de0100fd2988cfc2a7ff3b1b2e64.js"></script>
+
+</body>
+</html>
