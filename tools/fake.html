@@ -1,84 +1,31 @@
-````<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Vibe Check | JOATMON</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-    
     <style>
         * { margin:0; padding:0; box-sizing:border-box; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        body {
-            background:#0f172a; color:#fff; font-family:'Inter',sans-serif;
-            min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-            padding:20px; overflow-x:hidden; position:relative;
-        }
-        .bg-element {
-            position:fixed; border-radius:50%; filter:blur(120px); opacity:0.4; z-index:-1; pointer-events:none;
-            animation:float 18s infinite ease-in-out alternate;
-        }
+        body { background:#0f172a; color:#fff; font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; overflow-x:hidden; position:relative; }
+        .bg-element { position:fixed; border-radius:50%; filter:blur(120px); opacity:0.4; z-index:-1; pointer-events:none; animation:float 18s infinite ease-in-out alternate; }
         .bg-1 { width:60vw; height:60vw; max-width:600px; background:#8b5cf6; top:-15%; left:-15%; }
         .bg-2 { width:50vw; height:50vw; max-width:500px; background:#ec4899; bottom:-15%; right:-10%; animation-delay:-9s; }
         .bg-3 { width:35vw; height:35vw; max-width:350px; background:#60a5fa; top:40%; left:50%; animation-delay:-4s; }
         @keyframes float { 0%,100% { transform:translate(0,0) scale(1) rotate(0deg); } 50% { transform:translate(60px,90px) scale(1.12) rotate(3deg); } }
-        
         .app-container { width:100%; max-width:460px; position:relative; z-index:1; }
-        
-        .ad-zone {
-            width: 100%; min-height: 60px; margin: 15px 0;
-            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px);
-            border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 20px;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-        .btn-premium {
-        background: linear-gradient(45deg, #f472b6, #dc2626); /* Red/Pink for Adult/Premium feel */
-        color: white; border: none; padding: 20px; border-radius: 20px;
-        font-size: 1.15rem; font-weight: 800; cursor: pointer; margin-top: 10px;
-        box-shadow: 0 12px 30px rgba(220, 38, 38, 0.35); width: 100%;
-        text-transform: uppercase; letter-spacing: 1px;
-    }
-
-        .glass-card {
-            background:rgba(255,255,255,0.04); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
-            border:1px solid rgba(255,255,255,0.09); border-radius:28px; padding:32px 24px;
-            box-shadow:0 30px 60px rgba(0,0,0,0.4); text-align:center;
-        }
-
-        .header h1 {
-            font-family:'Space Grotesk',sans-serif; font-size:2.4rem;
-            background:linear-gradient(90deg,#c084fc,#f472b6,#60a5fa); -webkit-background-clip:text; color:transparent;
-            margin-bottom:8px; letter-spacing:-1px;
-        }
+        .ad-zone { width: 100%; min-height: 60px; margin: 15px 0; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .btn-premium { background: linear-gradient(45deg, #f472b6, #dc2626); color: white; border: none; padding: 20px; border-radius: 20px; font-size: 1.15rem; font-weight: 800; cursor: pointer; margin-top: 10px; box-shadow: 0 12px 30px rgba(220, 38, 38, 0.35); width: 100%; text-transform: uppercase; letter-spacing: 1px; }
+        .glass-card { background:rgba(255,255,255,0.04); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border:1px solid rgba(255,255,255,0.09); border-radius:28px; padding:32px 24px; box-shadow:0 30px 60px rgba(0,0,0,0.4); text-align:center; }
+        .header h1 { font-family:'Space Grotesk',sans-serif; font-size:2.4rem; background:linear-gradient(90deg,#c084fc,#f472b6,#60a5fa); -webkit-background-clip:text; color:transparent; margin-bottom:8px; letter-spacing:-1px; }
         .header p { font-size:0.95rem; color:#94a3b8; margin-bottom:28px; }
-        
         .progress-track { background:rgba(255,255,255,0.08); height:10px; border-radius:999px; overflow:hidden; margin:0 0 24px; }
-        .progress-fill {
-            height:100%; width:0%; background:linear-gradient(90deg,#a78bfa,#f472b6,#60a5fa);
-            transition:width 0.7s cubic-bezier(0.4,0,0.2,1); border-radius:999px;
-        }
-        
+        .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,#a78bfa,#f472b6,#60a5fa); transition:width 0.7s cubic-bezier(0.4,0,0.2,1); border-radius:999px; }
         #question-text { font-size:1.28rem; font-weight:500; margin-bottom:32px; line-height:1.45; color:#e2e8f0; min-height:3.2em; }
-        
-        .btn-option {
-            width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
-            padding:16px 20px; border-radius:18px; margin-bottom:12px; color:#fff; cursor:pointer;
-            font-size:1.05rem; font-weight:500; text-align:left; position:relative;
-        }
+        .btn-option { width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); padding:16px 20px; border-radius:18px; margin-bottom:12px; color:#fff; cursor:pointer; font-size:1.05rem; font-weight:500; text-align:left; position:relative; }
         .btn-option:hover { background:rgba(255,255,255,0.12); border-color:#a78bfa66; transform:translateY(-2px); }
-        
-        .btn-action {
-            width:100%; background:linear-gradient(45deg,#a78bfa,#f472b6,#60a5fa);
-            color:white; border:none; padding:20px; border-radius:20px; font-size:1.15rem; font-weight:700;
-            cursor:pointer; margin-top:16px; box-shadow:0 12px 30px rgba(139,92,246,0.35);
-        }
-
-        .btn-smart {
-            background: transparent; border: 1px solid #f472b6; color: #f472b6;
-            width: 100%; padding: 15px; border-radius: 20px; margin-top: 10px;
-            font-weight: 600; text-transform: uppercase; cursor: pointer;
-        }
-        
+        .btn-action { width:100%; background:linear-gradient(45deg,#a78bfa,#f472b6,#60a5fa); color:white; border:none; padding:20px; border-radius:20px; font-size:1.15rem; font-weight:700; cursor:pointer; margin-top:16px; box-shadow:0 12px 30px rgba(139,92,246,0.35); }
+        .btn-smart { background: transparent; border: 1px solid #f472b6; color: #f472b6; width: 100%; padding: 15px; border-radius: 20px; margin-top: 10px; font-weight: 600; text-transform: uppercase; cursor: pointer; }
         #result-screen, .spinner { display:none; }
         .spinner { width:48px; height:48px; border:5px solid rgba(139,92,246,0.2); border-left-color:#a78bfa; border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 24px; }
         @keyframes spin { to { transform:rotate(360deg); } }
@@ -90,53 +37,41 @@
 <div class="bg-element bg-1"></div>
 <div class="bg-element bg-2"></div>
 <div class="bg-element bg-3"></div>
-
 <div class="app-container">
-
     <div class="ad-zone">
         <script async="async" data-cfasync="false" src="https://hospitalforgery.com/bd3d9035186c17d583b639becb6229e5/invoke.js"></script>
         <div id="container-bd3d9035186c17d583b639becb6229e5"></div>
     </div>
-
     <div class="glass-card" id="main-card">
         <div class="header">
             <h1>The Vibe Check</h1>
             <p>TIPI Neural Assessment</p>
         </div>
-
         <div id="quiz-screen">
             <div class="progress-track"><div class="progress-fill" id="prog-val"></div></div>
             <div id="question-text"></div>
             <div id="options-box"></div>
             <div class="scale-labels">1 – Disagree strongly | 7 – Agree strongly</div>
         </div>
-
         <div id="result-screen">
             <div class="spinner" id="loading-spinner"></div>
             <div id="result-content" style="display:none;">
-    <h2 style="font-size:1.7rem; margin-bottom:12px;">Your Aura: <span id="aura-name" style="color:#c084fc;">...</span></h2>
-    <p id="aura-desc" style="margin-bottom:32px; font-size:1rem; color:#cbd5e1;"></p>
-    
-    <button class="btn-action" onclick="shareResult()">Share on WhatsApp</button>
-
-    <button class="btn-premium" onclick="window.open('https://hospitalforgery.com/hnj65y61c?key=ebb4b287e3d00e14e2e3a9b5493fbb8b', '_blank')">
-        🔞 Unlock Adult Vibe Report →
-    </button>
-</div>
+                <h2 style="font-size:1.7rem; margin-bottom:12px;">Your Aura: <span id="aura-name" style="color:#c084fc;">...</span></h2>
+                <p id="aura-desc" style="margin-bottom:32px; font-size:1rem; color:#cbd5e1;"></p>
+                <button class="btn-action" onclick="shareResult()">Share on WhatsApp</button>
+                <button class="btn-premium" onclick="window.open('https://hospitalforgery.com/hnj65y61c?key=ebb4b287e3d00e14e2e3a9b5493fbb8b', '_blank')">🔞 Unlock Adult Vibe Report →</button>
+            </div>
         </div>
     </div>
-
     <div class="ad-zone">
         <script async="async" data-cfasync="false" src="https://hospitalforgery.com/bd3d9035186c17d583b639becb6229e5/invoke.js"></script>
         <div id="container-bd3d9035186c17d583b639becb6229e5"></div>
     </div>
-
     <div class="methodology">
         Psychometric Protocol: Ten-Item Personality Inventory (TIPI).<br>
         All calculations execute client-side. No data retention.
     </div>
 </div>
-
 <script>
 const questions = [
     { q:"I see myself as extraverted, enthusiastic.", rev:false },
@@ -150,18 +85,13 @@ const questions = [
     { q:"I see myself as calm, emotionally stable.", rev:false },
     { q:"I see myself as conventional, uncreative.", rev:true }
 ];
-
 const scale = ["1","2","3","4 – Neutral","5","6","7"];
-
 const auras = [
     { name:"Golden ✨", desc:"High Extraversion & Agreeableness. You project a magnetic, warm, and reliable energy that anchors your social ecosystem." },
     { name:"Midnight 🌙", desc:"High Openness & Introversion. You possess a deep, reflective, and nuanced mental landscape that thrives in abstraction." },
     { name:"Electric ⚡", desc:"High Openness & Extraversion. You are a creative spark—dynamic, unpredictable, and driven by novel experience." }
 ];
-
-let current = 0;
-let scores = Array(questions.length).fill(0);
-
+let current = 0; let scores = Array(questions.length).fill(0);
 function render() {
     if (current >= questions.length) return showResult();
     document.getElementById("question-text").textContent = questions[current].q;
@@ -171,17 +101,11 @@ function render() {
     scale.forEach((txt,i) => {
         const val = i+1;
         const b = document.createElement("button");
-        b.className = "btn-option";
-        b.textContent = txt;
-        b.onclick = () => {
-            scores[current] = questions[current].rev ? 8-val : val;
-            current++;
-            render();
-        };
+        b.className = "btn-option"; b.textContent = txt;
+        b.onclick = () => { scores[current] = questions[current].rev ? 8-val : val; current++; render(); };
         box.appendChild(b);
     });
 }
-
 function showResult() {
     document.getElementById("quiz-screen").style.display = "none";
     document.getElementById("result-screen").style.display = "block";
@@ -189,9 +113,7 @@ function showResult() {
     setTimeout(() => {
         document.getElementById("loading-spinner").style.display = "none";
         document.getElementById("result-content").style.display = "block";
-        const e = (scores[0] + (8-scores[5]))/2;
-        const a = (scores[6] + (8-scores[1]))/2;
-        const o = (scores[4] + (8-scores[9]))/2;
+        const e = (scores[0] + (8-scores[5]))/2; const a = (scores[6] + (8-scores[1]))/2; const o = (scores[4] + (8-scores[9]))/2;
         let aura = auras[2];
         if (e > 5 && a > 4) aura = auras[0];
         else if (o > 5 && e < 4.5) aura = auras[1];
@@ -200,7 +122,6 @@ function showResult() {
         document.getElementById("prog-val").style.width = "100%";
     }, 1200);
 }
-
 function shareResult() {
     const name = document.getElementById("aura-name").textContent;
     const txt = `My neural vibe is ${name}. Get your scientific Big Five scan here → `;
@@ -208,8 +129,6 @@ function shareResult() {
 }
 render();
 </script>
-
 <script src="https://hospitalforgery.com/f2/e2/de/f2e2de0100fd2988cfc2a7ff3b1b2e64.js"></script>
-
 </body>
 </html>
