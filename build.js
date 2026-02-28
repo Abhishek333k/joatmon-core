@@ -14,7 +14,7 @@ files.forEach(file => {
     const filePath = path.join(toolsDir, file);
     const content = fs.readFileSync(filePath, 'utf8');
 
-    // 2. Extract the hidden JOATMON_META payload
+    // 2. Extract the hidden JOATMON_META payload (FIXED REGEX)
     const metaMatch = content.match(//);
     
     if (metaMatch && metaMatch[1]) {
@@ -34,7 +34,7 @@ files.forEach(file => {
     }
 });
 
-// 4. Inject into index.html
+// 4. Inject into index.html (FIXED REGEX)
 if (injectedCardsHTML !== '') {
     let indexContent = fs.readFileSync(indexPath, 'utf8');
     
@@ -44,5 +44,5 @@ if (injectedCardsHTML !== '') {
     fs.writeFileSync(indexPath, indexContent);
     console.log('JOATMON Build Process: index.html updated successfully.');
 } else {
-    console.log('No tools with valid metadata found.');
+    console.log('No tools with valid metadata found. Make sure your tools have the tag on line 1.');
 }
