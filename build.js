@@ -1,47 +1,36 @@
 const fs = require('fs');
 const path = require('path');
-
 const toolsDir = path.join(__dirname, 'tools');
 const indexPath = path.join(__dirname, 'index.html');
 
-console.log('JOATMON Build Process: Initiating Tool Scan...');
+console.log('Starting JOATMON Build...');
+const files = fs.readdirSync(toolsDir).filter(f => f.endsWith('.html'));
+let generatedCards = '';
 
-const files = fs.readdirSync(toolsDir).filter(file => file.endsWith('.html'));
-let injectedCardsHTML = '';
-
-// BULLETPROOF REGEX: Split into strings so it doesn't get corrupted when copied
-const metaRegex = new RegExp("<" + "!-- JOATMON_META=(.*?) --" + ">");
-const injectRegex = new RegExp("(" + "<" + "!-- INJECT_TOOLS_START --" + ">" + ")([\\s\\S]*?)(" + "<" + "!-- INJECT_TOOLS_END --" + ">" + ")");
+const searchTag = "<" + "!-- JOATMON_META=";
 
 files.forEach(file => {
-    const filePath = path.join(toolsDir, file);
-    const content = fs.readFileSync(filePath, 'utf8');
-
-    const metaMatch = content.match(metaRegex);
-    
-    if (metaMatch && metaMatch[1]) {
+    const content = fs.readFileSync(path.join(toolsDir, file), 'utf8');
+    if (content.includes(searchTag)) {
+        const rawJson = content.split(searchTag)[1].split("--" + ">")[0];
         try {
-            const meta = JSON.parse(metaMatch[1]);
-            console.log(`[+] Found Tool: ${meta.title}`);
-            
-            injectedCardsHTML += `
-        <a href="${meta.url}" class="tool-card">
-            <h3>${meta.title}</h3>
-            <p>${meta.desc}</p>
-        </a>\n`;
-        } catch (e) {
-            console.error(`[!] Failed to parse meta in ${file}`);
-        }
+            const meta = JSON.parse(rawJson);
+            generatedCards += `\n<a href="${meta.url}" class="tool-card"><h3>${meta.title}</h3><p>${meta.desc}</p></a>\n`;
+            console.log('Found tool: ' + meta.title);
+        } catch(e) {}
     }
 });
 
-if (injectedCardsHTML !== '') {
-    let indexContent = fs.readFileSync(indexPath, 'utf8');
+if (generatedCards !== '') {
+    let indexHtml = fs.readFileSync(indexPath, 'utf8');
+    const startMarker = "<" + "!-- INJECT_TOOLS_START --" + ">";
+    const endMarker = "<" + "!-- INJECT_TOOLS_END --" + ">";
     
-    indexContent = indexContent.replace(injectRegex, `$1\n${injectedCardsHTML}        $3`);
-    
-    fs.writeFileSync(indexPath, indexContent);
-    console.log('JOATMON Build Process: index.html updated successfully.');
-} else {
-    console.log('No tools with valid metadata found.');
+    const parts = indexHtml.split(startMarker);
+    if(parts.length > 1) {
+        const bottomHalf = parts[1].split(endMarker)[1];
+        const finalHtml = parts[0] + startMarker + generatedCards + endMarker + bottomHalf;
+        fs.writeFileSync(indexPath, finalHtml);
+        console.log('Successfully injected tools into index.html');
+    }
 }
