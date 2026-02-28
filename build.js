@@ -6,16 +6,18 @@ const indexPath = path.join(__dirname, 'index.html');
 
 console.log('JOATMON Build Process: Initiating Tool Scan...');
 
-// 1. Scan the /tools/ directory
 const files = fs.readdirSync(toolsDir).filter(file => file.endsWith('.html'));
 let injectedCardsHTML = '';
+
+// BULLETPROOF REGEX: Split into strings so it doesn't get corrupted when copied
+const metaRegex = new RegExp("<" + "!-- JOATMON_META=(.*?) --" + ">");
+const injectRegex = new RegExp("(" + "<" + "!-- INJECT_TOOLS_START --" + ">" + ")([\\s\\S]*?)(" + "<" + "!-- INJECT_TOOLS_END --" + ">" + ")");
 
 files.forEach(file => {
     const filePath = path.join(toolsDir, file);
     const content = fs.readFileSync(filePath, 'utf8');
 
-    // FIXED: The regex that finds the metadata
-    const metaMatch = content.match(//);
+    const metaMatch = content.match(metaRegex);
     
     if (metaMatch && metaMatch[1]) {
         try {
@@ -33,12 +35,10 @@ files.forEach(file => {
     }
 });
 
-// FIXED: The regex that injects into index.html
 if (injectedCardsHTML !== '') {
     let indexContent = fs.readFileSync(indexPath, 'utf8');
     
-    const regex = /()([\s\S]*?)()/;
-    indexContent = indexContent.replace(regex, `$1\n${injectedCardsHTML}        $3`);
+    indexContent = indexContent.replace(injectRegex, `$1\n${injectedCardsHTML}        $3`);
     
     fs.writeFileSync(indexPath, indexContent);
     console.log('JOATMON Build Process: index.html updated successfully.');
