@@ -14,7 +14,7 @@ files.forEach(file => {
     const filePath = path.join(toolsDir, file);
     const content = fs.readFileSync(filePath, 'utf8');
 
-    // 2. Extract the hidden JOATMON_META payload (FIXED REGEX)
+    // FIXED: The regex that finds the metadata
     const metaMatch = content.match(//);
     
     if (metaMatch && metaMatch[1]) {
@@ -22,7 +22,6 @@ files.forEach(file => {
             const meta = JSON.parse(metaMatch[1]);
             console.log(`[+] Found Tool: ${meta.title}`);
             
-            // 3. Construct the Liquid Glass HTML Card
             injectedCardsHTML += `
         <a href="${meta.url}" class="tool-card">
             <h3>${meta.title}</h3>
@@ -34,7 +33,7 @@ files.forEach(file => {
     }
 });
 
-// 4. Inject into index.html (FIXED REGEX)
+// FIXED: The regex that injects into index.html
 if (injectedCardsHTML !== '') {
     let indexContent = fs.readFileSync(indexPath, 'utf8');
     
@@ -44,5 +43,5 @@ if (injectedCardsHTML !== '') {
     fs.writeFileSync(indexPath, indexContent);
     console.log('JOATMON Build Process: index.html updated successfully.');
 } else {
-    console.log('No tools with valid metadata found. Make sure your tools have the tag on line 1.');
+    console.log('No tools with valid metadata found.');
 }
